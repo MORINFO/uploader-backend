@@ -1,0 +1,40 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "mysql"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_URL")
+}
+
+model Usuarios {
+  id         Int      @id @default(autoincrement())
+  email      String   @unique @default("public")
+  links      Links[]
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+}
+
+model Links {
+  id               Int      @id @default(autoincrement())
+  nome             String?  @default("")
+  email            String   @default("public")
+  tipo             tipo
+  tamanho          String?  @default("")
+  tamanho_completo Int?     @default(0)
+  caminho          String?  @default("")
+  link             String   @db.LongText
+  link_encurtado   String
+  created_at       DateTime @default(now())
+  updated_at       DateTime @updatedAt
+  clicks           Int      @default(0)
+  usuario          Usuarios @relation(fields: [email], references: [email])
+
+  @@index([email], map: "Links_email_fkey")
+}
+
+enum tipo {
+  file
+  link
+}
