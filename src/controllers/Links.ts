@@ -17,8 +17,6 @@ export class LinksController {
                 return res.status(500).json({ "erro": "erro ao buscar links" })
             }
 
-
-
             return res.json(busca_links)
 
         } catch (error) {
@@ -175,7 +173,6 @@ export class LinksController {
         } catch (error) {
             return res.status(500)
         }
-
     }
 }
 
